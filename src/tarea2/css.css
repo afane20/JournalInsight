@@ -1,0 +1,38 @@
+
+.root {
+   // -fx-background-image: url("pattern.png");
+}
+
+#clickMe {
+ -fx-font-size: 24px;      
+}
+
+#rightDiv{
+ -fx-border-bottom-style: solid;
+ -fx-background-image: url("patternBlue.png");
+}
+
+#addEntry {
+  
+    -fx-border: 2px solid #a1a1a1;
+   // -fx-padding: 10px 40px; 
+    -fx-background: #dddddd;
+    -fx-width: 300px;
+}
+
+#searchImage{
+    -fx-background-size: 42px 26px;
+    -fx-background-image: url("c.png");
+    -fx-background-attachment: fixed;
+    -fx-background-position: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}
+.button {
+    -fx-background-radius: 12;
+    -fx-padding: 5;
+    -fx-shadow-highlight-color: f0f0f0;
+    -fx-body-color: linear-gradient(from 0em 0em to 0em 2.083333em, white, #D7D7D7, white);
+}
+#searchBar{
+    
+}
