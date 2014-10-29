@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -63,10 +64,18 @@ public class FXMLController implements Initializable {
     private TextField searchBar;
     @FXML
     private Button sbutton;
-    
-       
+    @FXML
+    private ListView list;
+    @FXML
+    private Label entry1;
+    @FXML
+    private Label entry2;
+    @FXML
+    private Label entry3;
+    @FXML
+    private Button tester;
     Journal journal = new Journal();
-   
+    
     @Override
     public void initialize(URL location, ResourceBundle bundle) {
         Date today = new Date(); // make a date object
@@ -80,6 +89,14 @@ public class FXMLController implements Initializable {
         
     }
     
+   public void tester(){
+        Treads tr = new Treads();
+        tr.myLabel = entry1;
+        
+        Thread thread = new Thread(tr);
+        
+        thread.start();
+   }
     // pointer to the primary stage, allows the controller to have access to the 
     // main stage
      public void init(Stage primaryStage) {
@@ -89,13 +106,14 @@ public class FXMLController implements Initializable {
     
     // TESTER!!!!!! Button
     public void addEntry (ActionEvent event){
+        // the treading goes in the body of the function 
         if (field.getText().matches("") && textArea.getText().matches("")){
             eMessage.setText("Error, Please enter a date an your Entry");
         } else {
         Entry entry = new Entry();
         entry.setDate(field.getText());
         entry.setContent(textArea.getText());
-        journal.addEntry(entry);
+//        journal.addEntry(entry);
         
         field.setText("");
         textArea.setText("");
@@ -237,4 +255,16 @@ public class FXMLController implements Initializable {
         }
     }
     
+//    public void master(){
+//        String date;
+//        int count = 0;
+//        for (Entry entry : journal.getEntryList()){
+//             date = entry.getDate();
+//             count++;
+//             switch (count){
+//                 case 
+//             }   
+//             entry1.setText(date);
+//        }
+//    }
 }

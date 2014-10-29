@@ -137,9 +137,10 @@ public class SavingXML {
             Scripture scripture = new Scripture();
             group = bookNum.group();
             String[] book = group.split(" ");
-            if(book[0].equals("C")){book[0] = "Doctrine and Covenants";}
-            scripture.setBook(book[0]);
-            scripture.setChapter(book[1]);
+            
+//            if(book[0].equals("C")){book[0] = "Doctrine and Covenants";}
+//            scripture.setBook(book[0]);
+//            scripture.setChapter(book[1]);
             
             if (book[1].split(":").length == 2 )
             {

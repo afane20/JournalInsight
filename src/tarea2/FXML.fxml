@@ -59,6 +59,10 @@
                <children>
                   <Label fx:id="master" layoutX="91.0" layoutY="21.0" prefHeight="26.0" prefWidth="54.0" text="MASTER" />
                   <Text layoutX="14.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Files processed" wrappingWidth="103.0" />
+                  <Label fx:id="entry1" layoutX="14.0" layoutY="105.0" text="Label" />
+                  <Label layoutX="14.0" layoutY="131.0" text="Label" />
+                  <Label layoutX="14.0" layoutY="160.0" text="Label" />
+                  <Button fx:id="tester" layoutX="88.0" layoutY="334.0" mnemonicParsing="false" onAction="#tester" text="Button" />
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="492.0" prefWidth="550.0">
                <children>

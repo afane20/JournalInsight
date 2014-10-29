@@ -34,13 +34,15 @@ public class Journal {
     Entry entry;
     
     
-//    public static void main(String[] args) throws SAXException, IOException {
-//    Journal journal = new Journal();
-//    new ReadFile2().read(journal);
-//    journal.displayList();
-//    new SavingXML().run(journal);
-//    
-//    }
+    public static void main(String[] args) throws SAXException, IOException {
+    Journal journal = new Journal();
+    File file = null;
+    new ReadFile2().read(file, journal);
+    journal.displayList();
+    new SavingXML().run(journal);
+    
+    journal.displayAll();
+    }
             
     // Constructor 
     public Journal(){
@@ -103,7 +105,6 @@ public class Journal {
     
     
   public void searchEntryBookList(List<String>list){
-        
         boolean isFound = false;
         
         readBookList();
@@ -183,12 +184,12 @@ public class Journal {
     
      public void displayList(){
         
-       // System.out.println();
-        //System.out.println("Journal: ");
-       // System.out.println("Scripture References:");
+        System.out.println();
+        System.out.println("Journal: ");
+        System.out.println("Scripture References:");
         searchEntryBookList(bookList);
-       // System.out.println();
-       // System.out.println("Topic References:");
+        System.out.println();
+        System.out.println("Topic References:");
         searchEntryTopicList(topicList);
         
     }
@@ -204,14 +205,14 @@ public class Journal {
           System.out.println("Content: " + entry.getContent());  
       }
     }
-//    public void displayAll(){
-//        for (Entry entry : entryList){
-//           
-//            entry.displayScriptureList(entry.getScriptureList());
-//            entry.displayTopicList(entry.getTopicList());
-//            System.out.println("Content: " + entry.getContent());
-//            
-//        }
-//    }
+    public void displayAll(){
+        for (Entry entry : entryList){
+           
+            entry.displayScriptureList(entry.getScriptureList());
+            entry.displayTopicList(entry.getTopicList());
+            System.out.println("Content: " + entry.getContent());
+            
+        }
+    }
       
 }
