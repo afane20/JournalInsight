@@ -23,14 +23,28 @@ public class Treads implements Runnable, Updater{
     @Override
     public void run() {
         try {
-       for (int i = 0; i <= countEntries;i++){
+      int i = 0; 
+      int g = 0;
+      int t = 0;
+       for ( i = 0; i < countEntries;i++){
 
         Thread.sleep(1000);
         
-        update(i, countScriptures, countTopic);
-
-        Thread.sleep(1000);
+        update(i, g, t);
+       // Thread.sleep(1000);
+        
        }
+       for (g = 0; g < countScriptures; g++){
+           Thread.sleep(1000);
+           update(i, g, t);
+           
+       }
+
+       for (t = 0; t < countTopic;t++){
+           Thread.sleep(1000);
+           update(i, g, t);
+       }
+       
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -43,7 +57,6 @@ public class Treads implements Runnable, Updater{
             public void run() {
   
                 myLabel.setText("Entries found: " + i);
-        
                 myLabel2.setText("Scriptures found: " + countScriptures);
                 myLabel3.setText("Topics found: " + countTopic);
             }

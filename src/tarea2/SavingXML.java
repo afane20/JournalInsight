@@ -47,7 +47,9 @@ public class SavingXML {
         List<String> list = readTitles(fileName);
         findEntry(list, journal); // call the function 
         
-        String terms = "/Users/salvador_afane/Desktop/Tarea2/src/tarea2/terms.txt";
+       // String terms = "/Users/salvador_afane/Desktop/Tarea2/src/tarea2/terms.txt";
+        Properties properties = new Properties();
+        String terms = properties.getTopicFile();
         map2 = makeMapOfList(terms, journal);
         //displayMapList(map2);
 

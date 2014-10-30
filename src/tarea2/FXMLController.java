@@ -14,18 +14,22 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -71,6 +75,8 @@ public class FXMLController implements Initializable {
     @FXML
     private ListView list;
     @FXML
+    private ListView list2;
+    @FXML
     private Label entry1;
     @FXML
     private Label entry2;
@@ -80,7 +86,8 @@ public class FXMLController implements Initializable {
     private Button tester;
     
     Journal journal = new Journal();
-    
+     ObservableList items = FXCollections.observableArrayList();              
+
     @Override
     public void initialize(URL location, ResourceBundle bundle) {
         Date today = new Date(); // make a date object
@@ -93,6 +100,11 @@ public class FXMLController implements Initializable {
          journal = null;
         
     }
+    
+    public void init(Stage primaryStage) {
+         this.stage = primaryStage;
+         //Set the date 
+     }
     
    public void tester(){
         Treads tr = new Treads();
@@ -107,7 +119,6 @@ public class FXMLController implements Initializable {
         
         for (Entry entry : journal.getEntryList()){
             
-                System.out.println("hi");
                 cEntry++;
                 tr.countEntries = cEntry;
 
@@ -116,42 +127,14 @@ public class FXMLController implements Initializable {
 
                     tr.countScriptures = cScripture;
                }
+               for (String topic : entry.getTopicList()){
+                   cTopic++;
+                   tr.countTopic = cTopic;
+               }
         }
         Thread thread = new Thread(tr);
         thread.start();
    }
-
-   
-//   public void tester(){
-////        Thread thread = new Thread(tr);
-////        thread.start();
-//        int cEntry = 0;
-//        int cTopic = 0;
-//        int cScripture = 0;
-//        Treads tr = new Treads();
-//        Thread thread = new Thread(tr);
-//
-//        for (Entry entry : journal.getEntryList()){
-//                System.out.println("hi");
-//                cEntry++;
-//                tr.countEntries = cEntry;
-//                tester2(cEntry, cTopic, cScripture, tr);
-//               for (Scripture s : entry.getScriptureList()){
-//                   cScripture++;
-//
-//                    tr.countScriptures = cScripture;
-//               }
-//                              
-//
-//        }   
-//         thread.start();
-//   }
-    // pointer to the primary stage, allows the controller to have access to the 
-    // main stage
-     public void init(Stage primaryStage) {
-         this.stage = primaryStage;
-         //Set the date 
-     }
     
     // TESTER!!!!!! Button
     public void addEntry (ActionEvent event){
@@ -200,12 +183,30 @@ public class FXMLController implements Initializable {
             String text = "";
             
             for (Entry entry : journal.getEntryList()){
+                items.add(entry);
+
                   text += "-----\n" + "Date: " + entry.getDate() + "\n\n";
                   text += "Content: " + entry.getContent() + "\n\n";
                   
             }
-          
+            list.setItems(items);
             textArea.setText(text);
+            
+              list.setCellFactory(new Callback<ListView<Entry>, ListCell<Entry>>(){
+            @Override
+            public ListCell<Entry> call(ListView<Entry> listEntry) {
+                ListCell<Entry> cell = new ListCell<Entry>() {
+                    @Override
+                    protected void updateItem(Entry ent, boolean e) {
+                        if (ent != null) {
+                            setText(ent.getDate());
+                        }
+                    }
+                }; 
+                return cell;
+            }
+        });
+              
         }else 
           System.out.println("Error reading file: " + file);
         
@@ -227,11 +228,29 @@ public class FXMLController implements Initializable {
             new SavingXML().run2(journal, file.getPath(), file.getName());
             String text = "";
             for (Entry entry : journal.getEntryList()){
+                  items.add(entry);
+
                   text += "-----\n" + "Date: " + entry.getDate() + "\n\n";
                   text += "Content: " + entry.getContent() + "\n\n";
                   
             }
+            list.setItems(items);
           
+                list.setCellFactory(new Callback<ListView<Entry>, ListCell<Entry>>(){
+            @Override
+            public ListCell<Entry> call(ListView<Entry> listEntry) {
+                ListCell<Entry> cell = new ListCell<Entry>() {
+                    @Override
+                    protected void updateItem(Entry ent, boolean e) {
+                        if (ent != null) {
+                            setText(ent.getDate());
+                        }
+                    }
+                }; 
+                return cell;
+            }
+        });
+            
             textArea.setText(text);
         }else 
           System.out.println("Error reading file: " + file);
@@ -299,13 +318,19 @@ public class FXMLController implements Initializable {
        field.setText(date);
    }
     
-    public void searchBar(){
-        String search = searchBar.getText();
-        for (Entry entry : journal.getEntryList()){
-           
-        }
-    }
-    
+    public void searchBar(ActionEvent event){
+       String searchBook = searchBar.getText();                    
+               // try {         
+                    //journal.searchEntryBookList(searchBook);
+                    journal.searchEntryTopicMap(searchBook);
+               // } catch (IOException ex) {
+               //     Logger.getLogger(JavaFx.class.getName()).log(Level.SEVERE, null, ex);
+               // }
+            searchBar.clear();
+            searchBar.requestFocus();
+            }
+       
+ 
     public void reset(){
         field.setText("");
         textArea.setText("");
