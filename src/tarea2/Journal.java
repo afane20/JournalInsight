@@ -46,23 +46,33 @@ public class Journal {
     
     journal.displayAll();
     }
-            
-    // Constructor 
+         
+    /**************************************************************************
+    * Constructor: this function initialize the arrayList
+    ***************************************************************************/
     public Journal(){
         entryList = new ArrayList<>();
         bookList = new ArrayList<>();
         topicList = new ArrayList<>();
     }
     
-    // add an Entry object
+  
+    /**************************************************************************
+    * This function provides a way to add an entry unto the Entry List
+    ***************************************************************************/
     public void addEntry(Entry entr){
         entryList.add(entr);
         
     }   
+    
+   
     public Entry getEntry() {return entry;}
     
     
-    
+    /***************************************************************************
+    * ReadBookList: This function reads the book from the source folder and it
+    * parse through it 
+    ***************************************************************************/
       public void readBookList(){
         String fileName = "src/tarea2/books.txt";
         String line = "";
@@ -77,7 +87,10 @@ public class Journal {
         }
     }
     
-    
+    /***************************************************************************
+    * readTopicList: This function read the terms that are being passes.
+    * This information is later use to compare the term with a map 
+    ***************************************************************************/
     public void readTopicList(){
         String fileName = "src/tarea2/terms.txt";
         String line = "";
@@ -106,8 +119,12 @@ public class Journal {
     }
    
     
-    
-  public void searchEntryBookList(List<String>list){
+    /***************************************************************************
+    * searchEntryBookList: This function is finding the books of the entry. it 
+    * compare if the name of the book, meaning one book from the standards works
+    * (Scriptures) if found in the string.
+    ***************************************************************************/
+    public void searchEntryBookList(List<String>list){
         boolean isFound = false;
         
         readBookList();
@@ -136,6 +153,11 @@ public class Journal {
       }
     }    
     
+    /***************************************************************************
+    * This function search for a list of topics that we are interested in 
+    * finding. It uses the data that was grabbed from the file called terms and 
+    * compare the terms with the given entry 
+    ***************************************************************************/
      public void searchEntryTopicList(List<String>list){
         
         boolean isFound = false;
@@ -165,7 +187,10 @@ public class Journal {
         }      
       }
     }
-    
+    /***************************************************************************
+    * This function compares 2 strings, it compares if the topics are equal or 
+    * not 
+    ***************************************************************************/
       public boolean compareTopics(String topic1, String topic2){
         boolean isEqual = false;
        
@@ -176,6 +201,9 @@ public class Journal {
         return isEqual;
     }
     
+    /***************************************************************************
+    * The function compares if the books are equal or not.
+    ***************************************************************************/
      public boolean compareBooks(String book1, String book2){
         boolean isEqual = false;
        
@@ -185,14 +213,17 @@ public class Journal {
         return isEqual;
     }
     
+    /***************************************************************************
+    * This function display the journal with references to scriptures and topics 
+    ***************************************************************************/
      public void displayList(){
-        
-        System.out.println();
-        System.out.println("Journal: ");
-        System.out.println("Scripture References:");
-        searchEntryBookList(bookList);
-        System.out.println();
-        System.out.println("Topic References:");
+        // This was left like this ON PURPOSE!!!
+//        System.out.println();
+//        System.out.println("Journal: ");
+//        System.out.println("Scripture References:");
+//        searchEntryBookList(bookList);
+//        System.out.println();
+//        System.out.println("Topic References:");
         searchEntryTopicList(topicList);
         
     }

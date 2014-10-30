@@ -76,7 +76,6 @@
                         <ListView fx:id="list2" layoutX="21.0" layoutY="284.0" prefHeight="225.0" prefWidth="200.0" />
                         <Label layoutX="37.0" layoutY="27.0" text="Enter Topic, Book or Scripture" />
                         <Button fx:id="sbutton1" layoutX="147.0" layoutY="92.0" mnemonicParsing="false" onAction="#searchBook" text="Search Book" />
-                        <Button fx:id="sbutton11" layoutX="66.0" layoutY="148.0" mnemonicParsing="false" onAction="#searchScripture" text="Search Scripture" />
                      </children></AnchorPane>
                </children>
             </AnchorPane>

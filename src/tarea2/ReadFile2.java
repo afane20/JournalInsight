@@ -24,6 +24,11 @@ import org.xml.sax.SAXException;
 // This class will read an xml file and display the content.
 public class ReadFile2 {
     
+    /***************************************************************************
+    * Essential!!, This function can read an XML file. it can identify the 
+    * nodes, and assign the values where they belong. It can parse through an 
+    * XML file and make a journal entry according to the content of the file
+    ***************************************************************************/
     public void read (File fileName, Journal journal) throws SAXException, IOException{
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         
@@ -31,16 +36,13 @@ public class ReadFile2 {
             int cEntries = 0, cScriptures = 0, cTopics = 0;
             
         try{
-           // File xmlfile = new File("/Users/salvador_afane/NetBeansProjects/Tarea2/src/tarea2/burtonJournal.xml");
             File xmlfile = new File(fileName.getAbsolutePath());
             DocumentBuilder dBuilder = builderFactory.newDocumentBuilder();
             
-            //Document document = dBuilder.parse(ReadFile2.class.getResourceAsStream("burtonJournal.xml"));
             Document document = dBuilder.parse(xmlfile);
             document.normalize();
             
-            // gets the directory 
-            //System.out.println("Loading file: " + document.getDocumentURI());
+           
             
             NodeList rootNodes = document.getElementsByTagName("journal");// the root element 
             Node rootNode = rootNodes.item(0);
@@ -64,10 +66,8 @@ public class ReadFile2 {
                 Element entryElement = (Element) theEntry;
 
                 dateHolder = entryElement.getAttribute("date");
-                //System.out.println(dateHolder);
                 entry.setDate(dateHolder);
 
-                //NodeList scriptureList = rootElement.getElementsByTagName("scripture");
                 
                 NodeList scriptureList = entryElement.getElementsByTagName("scripture");
                 
@@ -78,10 +78,6 @@ public class ReadFile2 {
                 Node theScripture = scriptureList.item(g);
                 Element scripture = (Element) theScripture;
                 
-                
-                //System.out.print("This should be the book " + scripture.getAttribute("book") + " " 
-                //        + scripture.getAttribute("chapter") + " " + scripture.getAttribute("startverse"));
-                
                 bookHolder = scripture.getAttribute("book");
                 verseHolder = scripture.getAttribute("verse");
                 chapterHolder = scripture.getAttribute("chapter");
@@ -90,12 +86,8 @@ public class ReadFile2 {
                 Scripture1.setBook(bookHolder);
                 Scripture1.setChapter(chapterHolder);
                 Scripture1.setStartVerse(startVerseHolder);
-                
-                
-                
+               
                 if (scripture.hasAttribute("endverse")){
-                //   System.out.print(" " + scripture.getAttribute("endverse"));
-               // endVerseHolder = scripture.getAttribute("endverse");
                 Scripture1.setEndVerse(endVerseHolder);
                 } else {
                     Scripture1.setEndVerse("");
@@ -103,7 +95,6 @@ public class ReadFile2 {
                 
                 entry.addScripture(Scripture1);
                 cScriptures++;
-               // System.out.println();
                 
                 }
                 
@@ -118,14 +109,12 @@ public class ReadFile2 {
                 topicHolder = (topic.getTextContent());
                 entry.addTopic(topicHolder);
                 cTopics++; // counter
-               // System.out.println("This should be the topic " + topic.getTextContent());
                 }
                 
                 // get the content and parse it, cut the spaces and print it in the screen
                 String content = entryElement.getElementsByTagName("content").item(0).getTextContent();
                 content = content.trim();
                 content = content.replaceAll("\\n\\s+", "\n");
-               // System.out.println("This should be the content..... " + content);
  
                 entry.setContent(content);
                 
@@ -137,7 +126,6 @@ public class ReadFile2 {
             tr.countEntries = cEntries;
             tr.countScriptures = cScriptures;
             tr.countTopic = cTopics;
-            System.out.println("Everything worked");
         } catch (ParserConfigurationException e){
             e.printStackTrace();
         } catch (SAXException e){

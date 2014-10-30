@@ -60,9 +60,7 @@ public class SavingXML {
         
         String newFile = "/Users/salvador_afane/Desktop/Tarea2/src/tarea2/newFile.txt";
         writeTextFile(newFile,journal);
-       // } catch (FileNotFoundException ex) {
-         //   System.out.println("File Not Found");
-        //} 
+      
     }
      /**************************************************************************
     * Using the GUI
@@ -81,15 +79,10 @@ public class SavingXML {
         Document doc = buildXmlDocument(journal.getEntryList());
         String file = "";
         saveDocumentXML(doc, path2);
-        
-       // String newFile = "/Users/salvador_afane/Desktop/Tarea2/src/tarea2/newFile.txt";
-       // writeTextFile(newFile,journal);
-//        } catch (FileNotFoundException ex) {
-//         //   System.out.println("File Not Found");
-//        //} 
     }
     /***************************************************************************
-    *
+    * This function reads a file line by line and puts the information in an 
+    * array
     ***************************************************************************/
     public List<String> readTitles(String fileName) {
         List<String> list = new ArrayList<>();
@@ -106,9 +99,7 @@ public class SavingXML {
             ex.printStackTrace();
             // IOExepction is a super class of File Not Found
         }
-        
-        System.out.println("List: " + list.get(4));
-        
+                
         return list;           
     }
     /***************************************************************************
@@ -186,13 +177,12 @@ public class SavingXML {
        
     }
         
-//   public void organize(){
-//       
-//   }
+    /***************************************************************************
+    * This function builds an XML file with Nodes for a journal entry 
+    ***************************************************************************/
       public Document buildXmlDocument(List<Entry> list) {
         Document doc = null;
         try {
-//                organize();
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
  
@@ -234,8 +224,10 @@ public class SavingXML {
 	  }
         return doc;
     }
-    
-      //Save XML document 
+    /***************************************************************************
+    * This function save a XML document using the a file that is found in the 
+    * source, this was used to generate milestone 3
+    ***************************************************************************/
     public void saveDocument(Document doc, String file) {
  	try {
                 // write the content into xml file
@@ -254,7 +246,6 @@ public class SavingXML {
                 
 		transformer.transform(source, result);
  
-		System.out.println("XML File saved. Called \"" + file + "\"!");   
     
 	    }catch (TransformerException tfe) {
 		tfe.printStackTrace();
@@ -263,6 +254,10 @@ public class SavingXML {
         
     }
     
+    /***************************************************************************
+    * This function analyze the terms on an entry, so they can be compare with 
+    * a list of key words that is used to to group then by topics 
+    ***************************************************************************/
     public Map<String, String> makeMapOfList(String terms, Journal journal){
        
         Map <String, String> map = new HashMap<>();
@@ -292,6 +287,11 @@ public class SavingXML {
      searchTopic(map, journal);
      return map;  
     }
+    
+    /***************************************************************************
+    * This functions search for the topics in the journal entry and adds them 
+    * to the respective entry 
+    ***************************************************************************/
     public void searchTopic(Map<String, String> map, Journal journal){
         
         for (String terms : map.keySet()){
@@ -304,6 +304,10 @@ public class SavingXML {
             }
         } 
     }
+    
+    /***************************************************************************
+    * This function writes a simple text file the address
+    ***************************************************************************/
     public void writeSimpleText(String fileName, String content){
     try {
         PrintWriter write = new PrintWriter(fileName, "UTF-8");  
@@ -317,6 +321,10 @@ public class SavingXML {
         }
 
     }
+    
+    /***************************************************************************
+    * This function write a modify text file that is used for specific purposes 
+    ***************************************************************************/
     public void writeTextFile(String newFile, Journal journal) {      
         try {
             PrintWriter write = new PrintWriter(newFile, "UTF-8");  
@@ -330,7 +338,6 @@ public class SavingXML {
                 
              }// end of for loop
             write.close();
-            System.out.println("A normal text file made, Called ");
         } catch (UnsupportedEncodingException ex) {
             System.out.println("Error Reading File");
         } catch (FileNotFoundException e){
@@ -339,6 +346,10 @@ public class SavingXML {
 
     }
     
+    /***************************************************************************
+    * This functions is used by the GUI to save an XML file according to the 
+    * content that is in the text box of the display 
+    ***************************************************************************/
     public void saveDocumentXML(Document doc, String file) {
  	try {
                 // write the content into xml file
@@ -354,21 +365,12 @@ public class SavingXML {
                 StreamResult result = new StreamResult(new File(file));
 
 		transformer.transform(source, result);
- 
-		System.out.println("XML File saved. Called \"" + file + "\"!");   
-    
+     
 	    }catch (TransformerException tfe) {
 		tfe.printStackTrace();
             }
         
         
-    }
-    
-//    public void displayMapList(Map<String, List<String>> map) {
-//    // This sorts the list 
-//    //Collections.sort(list);
-//    for(String term : map.keySet()) {
-//    System.out.println(term + " " + map.get(term));
-//         }
-//    }
+    } 
+
 }
