@@ -27,6 +27,9 @@ public class ReadFile2 {
     public void read (File fileName, Journal journal) throws SAXException, IOException{
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         
+            // make counters 
+            int cEntries = 0, cScriptures = 0, cTopics = 0;
+            
         try{
            // File xmlfile = new File("/Users/salvador_afane/NetBeansProjects/Tarea2/src/tarea2/burtonJournal.xml");
             File xmlfile = new File(fileName.getAbsolutePath());
@@ -44,15 +47,15 @@ public class ReadFile2 {
             Element rootElement = (Element) rootNode; // entryList will hold the entry Nodes
             
             NodeList entryList = rootElement.getElementsByTagName("entry"); // entry
-            String _scripture = "";
-            String _verse = "";
-            String _chapter = "";
-            String _content = "";
-            String _topic = "";
-            String _book = "";
-            String _date = "";
-            String _startVerse = "";
-            String _endVerse = "";
+            String scriptureHolder = "";
+            String verseHolder = "";
+            String chapterHolder = "";
+            String contentHolder = "";
+            String topicHolder = "";
+            String bookHolder = "";
+            String dateHolder = "";
+            String startVerseHolder = "";
+            String endVerseHolder = "";
             List <String> listOfTopics = null;
             for (int i = 0; i < entryList.getLength();i++){
                 Entry entry = new Entry();
@@ -60,9 +63,9 @@ public class ReadFile2 {
                 Node theEntry = entryList.item(i);
                 Element entryElement = (Element) theEntry;
 
-                _date = entryElement.getAttribute("date");
-                //System.out.println(_date);
-                entry.setDate(_date);
+                dateHolder = entryElement.getAttribute("date");
+                //System.out.println(dateHolder);
+                entry.setDate(dateHolder);
 
                 //NodeList scriptureList = rootElement.getElementsByTagName("scripture");
                 
@@ -71,7 +74,7 @@ public class ReadFile2 {
                 //Scripture "for loop"
                 for (int g = 0; g < scriptureList.getLength();g++){
                 
-                Scripture escritura = new Scripture();
+                Scripture Scripture1 = new Scripture();
                 Node theScripture = scriptureList.item(g);
                 Element scripture = (Element) theScripture;
                 
@@ -79,26 +82,27 @@ public class ReadFile2 {
                 //System.out.print("This should be the book " + scripture.getAttribute("book") + " " 
                 //        + scripture.getAttribute("chapter") + " " + scripture.getAttribute("startverse"));
                 
-                _book = scripture.getAttribute("book");
-                _verse = scripture.getAttribute("verse");
-                _chapter = scripture.getAttribute("chapter");
-                _startVerse = scripture.getAttribute("startverse");
+                bookHolder = scripture.getAttribute("book");
+                verseHolder = scripture.getAttribute("verse");
+                chapterHolder = scripture.getAttribute("chapter");
+                startVerseHolder = scripture.getAttribute("startverse");
                 
-                escritura.setBook(_book);
-                escritura.setChapter(_chapter);
-                escritura.setStartVerse(_startVerse);
+                Scripture1.setBook(bookHolder);
+                Scripture1.setChapter(chapterHolder);
+                Scripture1.setStartVerse(startVerseHolder);
                 
                 
                 
                 if (scripture.hasAttribute("endverse")){
                 //   System.out.print(" " + scripture.getAttribute("endverse"));
-               // _endVerse = scripture.getAttribute("endverse");
-                escritura.setEndVerse(_endVerse);
+               // endVerseHolder = scripture.getAttribute("endverse");
+                Scripture1.setEndVerse(endVerseHolder);
                 } else {
-                    escritura.setEndVerse("");
+                    Scripture1.setEndVerse("");
                 }
                 
-                entry.addScripture(escritura);
+                entry.addScripture(Scripture1);
+                cScriptures++;
                // System.out.println();
                 
                 }
@@ -111,9 +115,9 @@ public class ReadFile2 {
                 Node theTopic = topicsList.item(t);
                 Element topic = (Element) theTopic;
                 
-                _topic = (topic.getTextContent());
-                entry.addTopic(_topic);
-
+                topicHolder = (topic.getTextContent());
+                entry.addTopic(topicHolder);
+                cTopics++; // counter
                // System.out.println("This should be the topic " + topic.getTextContent());
                 }
                 
@@ -126,8 +130,13 @@ public class ReadFile2 {
                 entry.setContent(content);
                 
                 journal.addEntry(entry);
+                cEntries++;
             }
             
+            Treads tr = new Treads();
+            tr.countEntries = cEntries;
+            tr.countScriptures = cScriptures;
+            tr.countTopic = cTopics;
             System.out.println("Everything worked");
         } catch (ParserConfigurationException e){
             e.printStackTrace();

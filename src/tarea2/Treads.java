@@ -12,33 +12,47 @@ import javafx.scene.control.Label;
  *
  * @author salvador_afane
  */
-public class Treads implements Runnable{
+public class Treads implements Runnable, Updater{
     public Label myLabel;
     public Label myLabel2;
     public Label myLabel3;
-    
+    public int countEntries;
+    public int countScriptures;
+    public String scriptures;
+    public int countTopic;
     @Override
     public void run() {
         try {
-            
-        Thread.sleep(2000);
-        
-        tester();
+       for (int i = 0; i <= countEntries;i++){
 
-        Thread.sleep(2000);
-    
+        Thread.sleep(1000);
+        
+        update(i, countScriptures, countTopic);
+
+        Thread.sleep(1000);
+       }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
     
-    public void tester(){
+    public void update(int i,int countScriptures,int countTopic){
+        
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                myLabel.setText("Something in here");
+  
+                myLabel.setText("Entries found: " + i);
+        
+                myLabel2.setText("Scriptures found: " + countScriptures);
+                myLabel3.setText("Topics found: " + countTopic);
             }
         });
         
+    }
+
+    @Override
+    public void update(int count) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

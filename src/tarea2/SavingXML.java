@@ -39,7 +39,8 @@ import org.w3c.dom.Element;
 public class SavingXML {
 
     Map<String, String> map2;
-   
+     
+     // This was implemented in the milestones
      public void run(Journal journal) {
         //try {
         String fileName = "/Users/salvador_afane/Desktop/Tarea2/src/tarea2/journal1.txt";
@@ -61,7 +62,9 @@ public class SavingXML {
          //   System.out.println("File Not Found");
         //} 
     }
-    // Using the GUI
+     /**************************************************************************
+    * Using the GUI
+    ***************************************************************************/
     public void run2(Journal journal, String path1, String path2) {
         //try {
         String fileName = path1;
@@ -83,7 +86,9 @@ public class SavingXML {
 //         //   System.out.println("File Not Found");
 //        //} 
     }
-    
+    /***************************************************************************
+    *
+    ***************************************************************************/
     public List<String> readTitles(String fileName) {
         List<String> list = new ArrayList<>();
    
@@ -104,9 +109,17 @@ public class SavingXML {
         
         return list;           
     }
+    /***************************************************************************
+    * This function finds the entries of a given file, with its scriptures and 
+    * topics, the "journal" object is being pass which will contain the "Entry"
+    * object.
+    ***************************************************************************/
     public void findEntry(List<String>list, Journal journal){
         String content = ""; // create the content 
         Entry entry2 = new Entry(); // make a new entry 
+        //preparing counters
+        int cScriptures = 0;
+        int cTopics = 0;
         for (int i = 0; i < list.size();i++)
         {
             if (list.get(i).equals("-----"))  // if there is  new entry 
@@ -156,14 +169,20 @@ public class SavingXML {
                 }
             }
             entry2.addScripture(scripture);
+            cScriptures++;
+            
         }// end of while loop
         
         
          
         }// end of for loop
+        int cEntry = 0;
         entry2.setContent(content);
         journal.addEntry(entry2);
-
+        cEntry++;
+        Treads tr = new Treads();
+        //tr.countScriptures = cScriptures;
+       // tr.tester(cEntry, cScriptures, cTopics);
     }
         
 //   public void organize(){

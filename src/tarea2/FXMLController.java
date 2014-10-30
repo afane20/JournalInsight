@@ -11,6 +11,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -53,6 +55,8 @@ public class FXMLController implements Initializable {
     @FXML
     private MenuItem saveXmlFile;
     @FXML
+    private MenuItem reset;
+    @FXML
     private TextField field;
     @FXML
     private TextArea textArea;
@@ -74,6 +78,7 @@ public class FXMLController implements Initializable {
     private Label entry3;
     @FXML
     private Button tester;
+    
     Journal journal = new Journal();
     
     @Override
@@ -91,12 +96,56 @@ public class FXMLController implements Initializable {
     
    public void tester(){
         Treads tr = new Treads();
+        int cEntry = 0;
+        int cTopic = 0;
+        int cScripture = 0;
         tr.myLabel = entry1;
+        tr.myLabel2 = entry2;
+        tr.myLabel3 = entry3;
+        tr.countEntries = cEntry;
         
+        
+        for (Entry entry : journal.getEntryList()){
+            
+                System.out.println("hi");
+                cEntry++;
+                tr.countEntries = cEntry;
+
+               for (Scripture s : entry.getScriptureList()){
+                   cScripture++;
+
+                    tr.countScriptures = cScripture;
+               }
+        }
         Thread thread = new Thread(tr);
-        
         thread.start();
    }
+
+   
+//   public void tester(){
+////        Thread thread = new Thread(tr);
+////        thread.start();
+//        int cEntry = 0;
+//        int cTopic = 0;
+//        int cScripture = 0;
+//        Treads tr = new Treads();
+//        Thread thread = new Thread(tr);
+//
+//        for (Entry entry : journal.getEntryList()){
+//                System.out.println("hi");
+//                cEntry++;
+//                tr.countEntries = cEntry;
+//                tester2(cEntry, cTopic, cScripture, tr);
+//               for (Scripture s : entry.getScriptureList()){
+//                   cScripture++;
+//
+//                    tr.countScriptures = cScripture;
+//               }
+//                              
+//
+//        }   
+//         thread.start();
+//   }
     // pointer to the primary stage, allows the controller to have access to the 
     // main stage
      public void init(Stage primaryStage) {
@@ -127,8 +176,9 @@ public class FXMLController implements Initializable {
     
     // OPENS an XML file 
     public void openfile(ActionEvent event) throws SAXException, IOException{
-        Journal journal = new Journal();
+        //Journal journal = new Journal();
         
+        // This opends the dialog to open a document 
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         fileChooser.setTitle("Open Text File");
@@ -139,6 +189,7 @@ public class FXMLController implements Initializable {
 
         );
         
+        // If the file is selected 
         if (file != null){
             // to read an xml file and parse its content and place all the content 
             // in its repective classes 
@@ -161,7 +212,7 @@ public class FXMLController implements Initializable {
     }
     // Open a TEXT FILE
     public void openFile2 (ActionEvent event){
-        Journal journal = new Journal();
+        //Journal journal = new Journal();
         
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
@@ -255,6 +306,10 @@ public class FXMLController implements Initializable {
         }
     }
     
+    public void reset(){
+        field.setText("");
+        textArea.setText("");
+    }
 //    public void master(){
 //        String date;
 //        int count = 0;
