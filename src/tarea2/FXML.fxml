@@ -46,11 +46,7 @@
               <MenuItem fx:id="reset" mnemonicParsing="false" onAction="#reset" text="Reset" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
+          <Menu fx:id="date1" mnemonicParsing="false" text="Date: " />
         </menus>
       </MenuBar>
       <SplitPane dividerPositions="0.26720647773279355" layoutY="26.0" prefHeight="294.0" prefWidth="308.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
@@ -58,11 +54,10 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="492.0" prefWidth="177.0" SplitPane.resizableWithParent="false">
                <children>
                   <Label fx:id="master" layoutX="91.0" layoutY="21.0" prefHeight="26.0" prefWidth="54.0" text="MASTER" />
-                  <Text layoutX="14.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Files processed" wrappingWidth="103.0" />
-                  <Label fx:id="entry1" layoutX="14.0" layoutY="105.0" text="Label" />
-                  <Label fx:id="entry2" layoutX="14.0" layoutY="131.0" text="Label" />
-                  <Label fx:id="entry3" layoutX="14.0" layoutY="160.0" text="Label" />
-                  <Button fx:id="tester" layoutX="67.0" layoutY="334.0" mnemonicParsing="false" onAction="#tester" text="Initialize Thread" />
+                  <Text fx:id="notify" layoutX="14.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Files processed" wrappingWidth="103.0" />
+                  <Label fx:id="entry1" layoutX="14.0" layoutY="105.0" />
+                  <Label fx:id="entry2" layoutX="14.0" layoutY="131.0" />
+                  <Label fx:id="entry3" layoutX="14.0" layoutY="160.0" />
                   <ListView fx:id="list" layoutX="17.0" layoutY="375.0" prefHeight="200.0" prefWidth="200.0" />
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="492.0" prefWidth="550.0">
@@ -74,11 +69,11 @@
                   <Label layoutX="210.0" layoutY="36.0" prefHeight="16.0" prefWidth="85.0" text="yyyy-mm-dd" />
                   <AnchorPane fx:id="rightDiv" layoutX="415.0" prefHeight="602.0" prefWidth="242.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button fx:id="addEntry" layoutX="59.0" layoutY="562.0" mnemonicParsing="false" onAction="#addEntry" prefHeight="26.0" prefWidth="132.0" style="-fx-border-radius: 15px;" stylesheets="@css.css" text="Add Entry" />
+                        <Button fx:id="addEntry" layoutX="59.0" layoutY="562.0" mnemonicParsing="false" onAction="#addEntry" prefHeight="26.0" prefWidth="132.0" style="-fx-border-radius: 15px;" stylesheets="@css.css" text="New Entry" />
                         <TextField fx:id="searchBar" layoutX="65.0" layoutY="54.0" onAction="#searchBar" />
                         <Label fx:id="eMessage" layoutX="35.0" layoutY="528.0" prefHeight="26.0" prefWidth="171.0" />
                         <Button fx:id="sbutton" layoutX="6.0" layoutY="54.0" mnemonicParsing="false" onAction="#searchBar" text="Search" />
-                        <ListView layoutX="21.0" layoutY="125.0" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="list2" layoutX="21.0" layoutY="125.0" prefHeight="200.0" prefWidth="200.0" />
                      </children></AnchorPane>
                </children>
             </AnchorPane>

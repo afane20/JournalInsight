@@ -84,28 +84,36 @@ public class FXMLController implements Initializable {
     private Label entry3;
     @FXML
     private Button tester;
+    @FXML
+    private MenuItem date1;
+     
     
     Journal journal = new Journal();
-     ObservableList items = FXCollections.observableArrayList();              
+    ObservableList items = FXCollections.observableArrayList();              
 
+    /****************************************************************************
+    * 
+    ***************************************************************************/
     @Override
     public void initialize(URL location, ResourceBundle bundle) {
         Date today = new Date(); // make a date object
-//        String date = String.format("%tA, %<tB %<td, %<tY", today);
-//        field.setText(date);
+        String date = String.format("%tA, %<tB %<td, %<tY", today);
+        date1.setText("Date: " + date);
         
          Journal journal = new Journal();
          journal.displayList();
          new SavingXML().run(journal);
-         journal = null;
-        
+         journal = null;   
     }
     
     public void init(Stage primaryStage) {
          this.stage = primaryStage;
-         //Set the date 
      }
-    
+   
+   /****************************************************************************
+    * This function calls the thread, also in order to make a good communication
+    * with the GUI, the function values are sent to the Runnable
+    ***************************************************************************/
    public void tester(){
         Treads tr = new Treads();
         int cEntry = 0;
@@ -115,7 +123,6 @@ public class FXMLController implements Initializable {
         tr.myLabel2 = entry2;
         tr.myLabel3 = entry3;
         tr.countEntries = cEntry;
-        
         
         for (Entry entry : journal.getEntryList()){
             
@@ -136,7 +143,9 @@ public class FXMLController implements Initializable {
         thread.start();
    }
     
-    // TESTER!!!!!! Button
+   /****************************************************************************
+    * 
+    ***************************************************************************/
     public void addEntry (ActionEvent event){
         // the treading goes in the body of the function 
         if (field.getText().matches("") && textArea.getText().matches("")){
@@ -145,23 +154,25 @@ public class FXMLController implements Initializable {
         Entry entry = new Entry();
         entry.setDate(field.getText());
         entry.setContent(textArea.getText());
-//        journal.addEntry(entry);
+        journal.addEntry(entry);
         
         field.setText("");
         textArea.setText("");
         }
     }
     
-    // This will exit the program when the user click on "Quit"
+    /****************************************************************************
+    * When the user clicks the quit button in the menu, the program will quit 
+    ***************************************************************************/
     public void doExit(){
         Platform.exit();
     }
     
-    // OPENS an XML file 
+    /****************************************************************************
+    * This function open an XML file 
+    ***************************************************************************/
     public void openfile(ActionEvent event) throws SAXException, IOException{
-        //Journal journal = new Journal();
-        
-        // This opends the dialog to open a document 
+       
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         fileChooser.setTitle("Open Text File");
@@ -179,7 +190,6 @@ public class FXMLController implements Initializable {
             new ReadFile2().read(file,journal);
             journal.display();
             
-           // new SavingXML().run(journal);
             String text = "";
             
             for (Entry entry : journal.getEntryList()){
@@ -203,6 +213,7 @@ public class FXMLController implements Initializable {
                         }
                     }
                 }; 
+                tester();
                 return cell;
             }
         });
@@ -211,7 +222,10 @@ public class FXMLController implements Initializable {
           System.out.println("Error reading file: " + file);
         
     }
-    // Open a TEXT FILE
+    
+    /****************************************************************************
+    * This function opens a text file 
+    ***************************************************************************/
     public void openFile2 (ActionEvent event){
         //Journal journal = new Journal();
         
@@ -247,6 +261,7 @@ public class FXMLController implements Initializable {
                         }
                     }
                 }; 
+                tester();
                 return cell;
             }
         });
@@ -257,7 +272,11 @@ public class FXMLController implements Initializable {
         
     }
     
+    /****************************************************************************
+    * Saves an XML file as the user clicks on the right menu item 
+    ***************************************************************************/
     public void saveXMLFile(ActionEvent event){
+        Journal journal = new Journal();
         SavingXML saver = new SavingXML(); // making a class object
         String fileName = "text.txt";
         
@@ -268,26 +287,29 @@ public class FXMLController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save");
         File file = fileChooser.showSaveDialog(stage);
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", ".txt"),
+                new FileChooser.ExtensionFilter("XML Files", ".xml")
+
+        );
         
         if (file != null){
         String convert = "text.txt";
-        saver.run2(journal, convert, file.getPath());
+        saver.run2(journal, convert, file.getAbsolutePath());
   
         Document xml = saver.buildXmlDocument(journal.getEntryList());
-        
-        
-       // saver.searchTopic(, journal);    
-       // saver.run2(journal, file.getPath());
-
-        saver.saveDocumentXML(xml, file.getPath());
-        field.setText(text);
+     
+        saver.saveDocumentXML(xml, file.getAbsolutePath());
         System.out.println("something must be saved " + text);
     }
         else{
-        //display in master!!!
         }
     }
    
+    /****************************************************************************
+    * Saves a text file when the user clicks on the menu to save it.
+    ***************************************************************************/
     public void saveTextFile(ActionEvent event){
         Journal journal = new Journal();
         
@@ -300,6 +322,12 @@ public class FXMLController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save");
         File file = fileChooser.showSaveDialog(stage);
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", ".txt"),
+                new FileChooser.ExtensionFilter("XML Files", ".xml")
+
+        );
         
         if (file != null){
             SavingXML saver = new SavingXML();
@@ -308,43 +336,52 @@ public class FXMLController implements Initializable {
         
         
     }
-    // clear the entry fieds, prepare the scene for a new entry.
+    
+   /****************************************************************************
+    * clear the entry fields, prepare the scene for a new entry.
+    ***************************************************************************/
     public void newFile(){
        textArea.setText("");
-       field.setText("");
-       
-       Date today = new Date(); // make a date object
-       String date = String.format("%tA, %<tB %<td, %<tY", today);
-       field.setText(date);
+       field.setText("");       
    }
     
+    /****************************************************************************
+    * Search for a word and displays it in the second listView 
+    ***************************************************************************/
     public void searchBar(ActionEvent event){
        String searchBook = searchBar.getText();                    
-               // try {         
-                    //journal.searchEntryBookList(searchBook);
-                    journal.searchEntryTopicMap(searchBook);
-               // } catch (IOException ex) {
-               //     Logger.getLogger(JavaFx.class.getName()).log(Level.SEVERE, null, ex);
-               // }
+              
+            journal.searchEntryTopicMap(searchBook);
             searchBar.clear();
             searchBar.requestFocus();
+            
+             list2.setItems(items);
+          
+                list2.setCellFactory(new Callback<ListView<Entry>, ListCell<Entry>>(){
+            @Override
+            public ListCell<Entry> call(ListView<Entry> listEntry) {
+                ListCell<Entry> cell = new ListCell<Entry>() {
+                    @Override
+                    protected void updateItem(Entry ent, boolean e) {
+                        if (ent != null) {
+                            setText(ent.getDate());
+                        }
+                    }
+                }; 
+               
+                return cell;
             }
-       
- 
+        });
+            
+            
+    }
+   
+    /****************************************************************************
+    * Reset the fields 
+    ***************************************************************************/
     public void reset(){
         field.setText("");
         textArea.setText("");
     }
-//    public void master(){
-//        String date;
-//        int count = 0;
-//        for (Entry entry : journal.getEntryList()){
-//             date = entry.getDate();
-//             count++;
-//             switch (count){
-//                 case 
-//             }   
-//             entry1.setText(date);
-//        }
-//    }
+
 }

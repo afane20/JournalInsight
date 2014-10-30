@@ -67,9 +67,9 @@ public class SavingXML {
      /**************************************************************************
     * Using the GUI
     ***************************************************************************/
-    public void run2(Journal journal, String path1, String path2) {
+    public void run2(Journal journal, String convert, String path2) {
         //try {
-        String fileName = path1;
+        String fileName = convert;
         List<String> list = readTitles(fileName);
         findEntry(list, journal); // call the function 
         
@@ -82,9 +82,9 @@ public class SavingXML {
         String file = "";
         saveDocumentXML(doc, path2);
         
-//        String newFile = "/Users/salvador_afane/Desktop/Tarea2/src/tarea2/newFile.txt";
-//        writeTextFile(newFile,journal);
-//       // } catch (FileNotFoundException ex) {
+       // String newFile = "/Users/salvador_afane/Desktop/Tarea2/src/tarea2/newFile.txt";
+       // writeTextFile(newFile,journal);
+//        } catch (FileNotFoundException ex) {
 //         //   System.out.println("File Not Found");
 //        //} 
     }
@@ -151,12 +151,13 @@ public class SavingXML {
         {   
             Scripture scripture = new Scripture();
             group = bookNum.group();
+            if (group.split(" ").length == 2){
             String[] book = group.split(" ");
             
-//            if(book[0].equals("C")){book[0] = "Doctrine and Covenants";}
-//            scripture.setBook(book[0]);
-//            scripture.setChapter(book[1]);
-            
+            if(book[0].equals("C")){book[0] = "Doctrine and Covenants";}
+            scripture.setBook(book[0]);
+            scripture.setChapter(book[1]);
+        
             if (book[1].split(":").length == 2 )
             {
             String[] chapter = book[1].split(":");
@@ -172,7 +173,7 @@ public class SavingXML {
             }
             entry2.addScripture(scripture);
             cScriptures++;
-            
+            }
         }// end of while loop
         
         
@@ -182,9 +183,7 @@ public class SavingXML {
         entry2.setContent(content);
         journal.addEntry(entry2);
         cEntry++;
-        Treads tr = new Treads();
-        //tr.countScriptures = cScriptures;
-       // tr.tester(cEntry, cScriptures, cTopics);
+       
     }
         
 //   public void organize(){
@@ -252,13 +251,7 @@ public class SavingXML {
 		DOMSource source = new DOMSource(doc);
                 
                 StreamResult result = new StreamResult(new File("/Users/salvador_afane/Desktop/Tarea2/src/tarea2/hello.xml"));
-                //StreamResult result = new StreamResult(new File());
-
-                //  StreamResult result = new StreamResult(new File("C:\\file.xml"));
-
-		// Output to console for testing
-		// StreamResult result = new StreamResult(System.out)
-               
+                
 		transformer.transform(source, result);
  
 		System.out.println("XML File saved. Called \"" + file + "\"!");   

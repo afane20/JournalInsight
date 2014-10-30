@@ -215,7 +215,7 @@ public class Journal {
         }
     }
       public void searchEntryTopicMap(String searchParam){
-               boolean isFound = false;
+        boolean isFound = false;
         boolean first = true;
             
         // Go through the list of entries and compare books
