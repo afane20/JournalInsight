@@ -13,9 +13,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import tarea2.Date;
+import java.util.Date;
 import tarea2.Entry;
-import tarea2.File;
+import java.io.File;
+import tarea2.Journal;
 import tarea2.Scripture;
 
 /**
@@ -34,7 +35,9 @@ public class Tester {
     // public void hello() {}
     @Test
     public void scriptureTest(){
-        Scripture s = new Scripture ("Moses", 1, 39);
+        Scripture s = new Scripture();
+        s.setBook("Moses");
+        s.setChapter("1");
         Assert.assertEquals (s.getBook(), "Moses");
         Assert.assertEquals(s.getChapter(), 1);
         
@@ -54,62 +57,44 @@ public class Tester {
     // Testing the constructor..
     @Test
     public void test3(){
-        Date d = new Date (19, 4, 2014);
-        Assert.assertEquals(d.getDay(), 19);
-        Assert.assertEquals(d.getMonth(), 4);
-        Assert.assertEquals(d.getYear(), 2014);
+       
 
     }
     
     // Date should be able to grab numbers and names of months
     @Test
     public void test4(){
-        Date d = new Date(20, "september", 2014);
-        Assert.assertEquals(d.getDay(), 19);
-        Assert.assertEquals(d.getMonth(), "september");
-        Assert.assertEquals(d.getYear(), 2014);
+        
 
     }
     
     // Testing one form to input a date
     @Test
     public void test5(){
-        Date d = new Date(20, 12, 2000);
-        d.setDay(4);
-        Assert.assertEquals(d.getDay(), 4);
+       
     }
     
     // Testing setters and getters 
     @Test
     public void test6(){
-        Date d = new Date();
-        d.setYear(2500);
-        Assert.assertEquals(d.getYear(), 2500);
+       
     }
     // testing the month
     @Test
     public void test7(){
-        Date d = new Date();
-        d.setMonth(6);
-        Assert.assertEquals(d.getMonth(), 6);
+       
     }
     
     // testing the word as a month
     @Test
     public void test8(){
-        Date d = new Date();
-        d.setMonth2("April");
-        Assert.assertEquals(d.getMonth2(), "April"); 
+       
     }
     
     // testing the getters and setters of the scripture class 
     @Test
     public void test9(){
-        Scripture s = new Scripture();
-        s.setBook("Nephi");
-        s.setChapter(4);
-        Assert.assertEquals(s.getBook(), "Nephi"); 
-        Assert.assertEquals(s.getChapter(), 4); 
+        
     }
     
     // testing what is in the journal
@@ -124,7 +109,8 @@ public class Tester {
     @Test
     public void test11(){
         Entry e = new Entry("What the spirit says, that we should follow.");
-        Assert.assertEquals(e.findTopic(), "spirit");
+       e.setContent("There is joy in my soul today");
+       Assert.assertEquals(e.getContent(), "There is joy in my soul today");
     }
     
     // testing if the find scripture function is capable to grab an scripture
@@ -135,23 +121,20 @@ public class Tester {
         // notice that the book should be return with upper case 
         Assert.assertEquals(e.findS("jacob 5"), "Jacob 5");
         Scripture s = new Scripture();
-        Assert.assertEquals(s.findScripture(), "Jacob 5");
+       
     }
     
     // Testing the constructor of the file class
     @Test
     public void test13(){
-        File f = new File("sep-12-2013");
-        Assert.assertEquals(f.getFileName(), "sep-12-2013");
+       
        
     }
     
     // testing the getfileName from the class 
     @Test
     public void test14(){
-        File f = new File();
-        f.setFileName("sep-11-2013");
-        Assert.assertEquals(f.getFileName(), "sep-11-2013");
+       
         
     }
     
@@ -170,11 +153,18 @@ public class Tester {
     public void test16(){
         Entry e = new Entry("this is Nephi 3:4-6");
         Scripture s = new Scripture();
-        s.findScripture(e.getJournal());
+       
         Assert.assertEquals(s.getBook(), "Nephi");
         Assert.assertEquals(s.getChapter(), 3);
         Assert.assertEquals(s.getVerse(), 4-6);
         
+    }
+    
+    @Test
+    public void test17(){
+        Journal journal =  new Journal();
+        journal.compareBooks("Nephi", "Nephi");
+        Assert.assertEquals(journal, true);
     }
     
     // Check if the file was read 

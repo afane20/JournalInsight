@@ -10,7 +10,9 @@ import javafx.scene.control.Label;
 
 /**
  *
- * @author salvador_afane
+ * @author salvador_afane, Ahslie Horst 
+ * This function will update the GUI according to the number of entries
+ * scriptures and topics that are being found
  */
 public class Treads implements Runnable, Updater{
     public Label myLabel;
@@ -22,6 +24,10 @@ public class Treads implements Runnable, Updater{
     public int countTopic;
     @Override
     public void run() {
+        
+        
+        
+        
         try {
       int i = 0; 
       int g = 0;
@@ -49,21 +55,39 @@ public class Treads implements Runnable, Updater{
             ex.printStackTrace();
         }
     }
-    
-    public void update(int i,int countScriptures,int countTopic){
+    /***************************************************************************
+     * 
+     * @param countEntries --- it receives the value from the number of entries 
+     * @param countScriptures --- value of the number of scriptures 
+     * @param countTopic  --- value of the number of topics found 
+     * 
+     * The function will update the GUI
+     */
+    public void update(int countEntries,int countScriptures,int countTopic){
         
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
   
-                myLabel.setText("Entries found: " + i);
+                myLabel.setText("Entries found: " + countEntries);
                 myLabel2.setText("Scriptures found: " + countScriptures);
                 myLabel3.setText("Topics found: " + countTopic);
             }
         });
         
     }
-
+    /**************************************************************************
+    * This function should communicate with another to open a file.
+    * in progress... 
+    ***************************************************************************/
+    public void openFile(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run(){
+                
+            }
+    });
+    }
     @Override
     public void update(int count) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

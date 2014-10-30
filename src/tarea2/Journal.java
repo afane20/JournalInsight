@@ -22,7 +22,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author salvador_afane
+ * @author salvador_afane, Ahslie Horst 
  */
 public class Journal {
     
@@ -33,7 +33,10 @@ public class Journal {
     private List<String> topicList;
     Entry entry;
     
-    
+    /**************************************************************************
+    * This function will call the other ones in order to generate a well 
+    * organized list for the scriptures, books, topics and entries.
+    ***************************************************************************/
     public static void main(String[] args) throws SAXException, IOException {
     Journal journal = new Journal();
     File file = null;
@@ -214,20 +217,5 @@ public class Journal {
             
         }
     }
-      public void searchEntryTopicMap(String searchParam){
-        boolean isFound = false;
-        boolean first = true;
-            
-        // Go through the list of entries and compare books
-        for (Entry entry : entryList) {
-            for (int i = 0; i < entry.getTopicList().size(); i++) {
-                String s = entry.getTopicList().get(i);
-                if (s.equals(searchParam)){
-                    System.out.println("\t" + entry.getDate());
-                }     
-  
-                                     
-            }      
-        }
-    }
+      
 }

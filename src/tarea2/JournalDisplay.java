@@ -20,17 +20,14 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author salvador_afane
+ * @author salvador_afane, Ahslie Horst 
  */
 public class JournalDisplay extends Application {
     
     @Override
     public void start(Stage primaryStage) {
        
-//        Journal journal = new Journal();
-//        journal.displayList();
-//        new SavingXML().run(journal);
-        
+
         try{
         // This gets the Parent Node from the FXML file that was generated
             
@@ -41,7 +38,7 @@ public class JournalDisplay extends Application {
         controller.init(primaryStage);
         
         
-        Scene scene = new Scene(root, 900, 630);
+        Scene scene = new Scene(root, 900, 630);  // it generates the GUI
         
         //This gets the CSS file from the project
         scene.getStylesheets().add(JournalDisplay.class.getResource("css.css").toExternalForm());

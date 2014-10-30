@@ -100,4 +100,8 @@ public class Entry {
             System.out.println("Topic: " + topic);
         }
     }
+
+    public Object findTopic() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

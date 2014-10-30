@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,7 +72,15 @@ public class FXMLController implements Initializable {
     @FXML
     private TextField searchBar;
     @FXML
+    private TextField searchBar1;
+    @FXML
+    private TextField searchBar11;
+    @FXML
     private Button sbutton;
+    @FXML
+    private Button sbutton1;
+    @FXML
+    private Button sbutton11;
     @FXML
     private ListView list;
     @FXML
@@ -89,7 +98,9 @@ public class FXMLController implements Initializable {
      
     
     Journal journal = new Journal();
-    ObservableList items = FXCollections.observableArrayList();              
+    ObservableList items = FXCollections.observableArrayList();  
+    ObservableList searchItems = FXCollections.observableArrayList();              
+
 
     /****************************************************************************
     * 
@@ -351,11 +362,67 @@ public class FXMLController implements Initializable {
     public void searchBar(ActionEvent event){
        String searchBook = searchBar.getText();                    
               
-            journal.searchEntryTopicMap(searchBook);
+            searchEntryTopicMap(searchBook);
             searchBar.clear();
             searchBar.requestFocus();
             
-             list2.setItems(items);
+             list2.setItems(searchItems);
+          
+                list2.setCellFactory(new Callback<ListView<Entry>, ListCell<Entry>>(){
+            @Override
+            public ListCell<Entry> call(ListView<Entry> listEntry) {
+                ListCell<Entry> cell = new ListCell<Entry>() {
+                    @Override
+                    protected void updateItem(Entry ent, boolean e) {
+                        if (ent != null) {
+                            setText(ent.getDate());
+                        }
+                    }
+                }; 
+               
+                return cell;
+            }
+        });
+            
+            
+    }
+    
+    public void searchBook(ActionEvent event){
+       String searchBook = searchBar.getText();                    
+              
+            searchEntryBookList(searchBook);
+            searchBar.clear();
+            searchBar.requestFocus();
+            
+             list2.setItems(searchItems);
+          
+                list2.setCellFactory(new Callback<ListView<Entry>, ListCell<Entry>>(){
+            @Override
+            public ListCell<Entry> call(ListView<Entry> listEntry) {
+                ListCell<Entry> cell = new ListCell<Entry>() {
+                    @Override
+                    protected void updateItem(Entry ent, boolean e) {
+                        if (ent != null) {
+                            setText(ent.getDate());
+                        }
+                    }
+                }; 
+               
+                return cell;
+            }
+        });
+            
+            
+    }
+    
+    public void searchScripture(ActionEvent event){
+       String searchBook = searchBar.getText();                    
+              
+            searchEntryTopicMap(searchBook);
+            searchBar.clear();
+            searchBar.requestFocus();
+            
+             list2.setItems(searchItems);
           
                 list2.setCellFactory(new Callback<ListView<Entry>, ListCell<Entry>>(){
             @Override
@@ -384,4 +451,43 @@ public class FXMLController implements Initializable {
         textArea.setText("");
     }
 
+    public void searchEntryTopicMap(String searchParam){
+        boolean isFound = false;
+        boolean first = true;
+            
+        // Go through the list of entries and compare books
+        for (Entry entry : journal.getEntryList()) {
+            for (int i = 0; i < entry.getTopicList().size(); i++) {
+                String s = entry.getTopicList().get(i);
+                if (s.equals(searchParam)){
+                    searchItems.add(entry);
+                }     
+  
+                                     
+            }      
+        }
+    }
+    
+     public void searchEntryBookList(String str){
+        boolean isFound = false;
+        
+        journal.readBookList();
+        
+        
+            
+        for (Entry entry : journal.getEntryList()) {
+                      
+            for (int i = 0; i < entry.getScriptureList().size(); i++) {
+                
+                Scripture s = entry.getScriptureList().get(i);
+                isFound = journal.compareBooks(s.getBook(), str);
+                
+                if (isFound) {
+                    searchItems.add(entry);
+                    break;
+                }                  
+            }      
+        }      
+      
+    } 
 }
